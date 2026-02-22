@@ -22,6 +22,8 @@ public class ExpenseDto {
 
     private String expense_category;
 
+    private double total_amount;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 }

@@ -3,9 +3,10 @@ package com.example.expenses.tracker.controller;
 
 import com.example.expenses.tracker.dto.ExpenseDto;
 import com.example.expenses.tracker.service.ExpenseService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +24,20 @@ public class ExpenseController {
   public List<ExpenseDto> getAllExpenses(){
         return expenseService.getAllExpenses();
     }
+
+    @GetMapping("/totalSum")
+    public Double getTotalSum(){
+        return expenseService.getTotalSum();
+    }
+
+    @PostMapping
+    public ResponseEntity<ExpenseDto> createExpense(@Valid @RequestBody ExpenseDto dto) {
+        // We pass the DTO (Request) to the service
+        ExpenseDto savedDto = expenseService.saveExpense(dto);
+
+        // Return the saved DTO with a 201 Created status
+        return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
+    }
+
 
 }
